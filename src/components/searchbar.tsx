@@ -7,9 +7,10 @@ import style from "./serachbar.module.css";
 export default function Searchbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
 
   const q = searchParams.get("q");
+ 
 
   useEffect(() => {
     setSearch(q || "");
