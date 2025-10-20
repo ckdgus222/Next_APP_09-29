@@ -41,18 +41,27 @@ async function BookDetail({ bookId }: { bookId: string }) {
   );
 }
 
-async function ReviewList({bookId}:{bookId:string}){
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`)
+async function ReviewList({ bookId }: { bookId: string }) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
+    {
+      next: { tags: [`review-${bookId}`] },
+    }
+  );
 
-  if(!response.ok){
-     throw new Error(`Review fetch failed : ${response.statusText}`)
+  if (!response.ok) {
+    throw new Error(`Review fetch failed : ${response.statusText}`);
   }
 
-  const reviews:ReviewData[] = await response.json()
+  const reviews: ReviewData[] = await response.json();
 
-  return <section>
-    {reviews.map((review) => <ReviewItem key={`review-item-${review.id}`} {...review}/>)}
-  </section>
+  return (
+    <section>
+      {reviews.map((review) => (
+        <ReviewItem key={`review-item-${review.id}`} {...review} />
+      ))}
+    </section>
+  );
 }
 
 export default async function Page({
@@ -64,8 +73,8 @@ export default async function Page({
   return (
     <div className={style.container}>
       <BookDetail bookId={id} />
-      <ReviewEditor bookId={id}/>
-      <ReviewList bookId={id}/>
+      <ReviewEditor bookId={id} />
+      <ReviewList bookId={id} />
     </div>
   );
 }
