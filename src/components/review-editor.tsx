@@ -9,9 +9,11 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
     createReviewAction,
     null
   );
+  
 
   useEffect(() => {
     if (state && !state.status) {
+      console.log(state)
       alert(state.error);
     }
   }, [state]);
